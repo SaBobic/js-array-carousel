@@ -15,7 +15,7 @@ let galleryList = '<i class="fa-solid fa-circle-chevron-left" id="prev-arrow"></
 const images = ["img/01.jpg", "img/02.jpg", "img/03.jpg", "img/04.jpg", "img/05.jpg"];
 
 // 3. Creo ciclo for i=0, i<5 per concatenare i li all'interno degli ul (uso i per centralizzare nome immagini)
-for (let i = 0; i < 5; i++){
+for (let i = 0; i < images.length; i++){
     galleryList += `<li><img src="${images[i]}" alt="Gallery Image ${i + 1}"></li>`;
 }
 
@@ -35,6 +35,7 @@ carouselGallery.innerHTML = galleryList;
 6. All'interno dell'addEventListener quando clicco associo nuovamente la classe active secondo l'activeClassIndex
 */
 
+
 // 1. Dichiaro le variabili globali: frecce prev e next, immagine visibile, indice per associare l'immagine visibile
 const prevArrow = document.getElementById('prev-arrow');
 const nextArrow = document.getElementById('next-arrow');
@@ -48,13 +49,16 @@ galleryListImages[activeClassIndex].classList.add('active');
 
 // 3. Aggiungo l'addEventListener al click delle frecce per cambiare l'index alla classe active
 nextArrow.addEventListener('click', function(){
-
+    
     // 4. All'interno dell'addEventListener quando clicco il bottone faccio rimuovere la classe active all'immagine che già la possiede
     galleryListImages[activeClassIndex].classList.remove('active');
-
+    
     // 5. All'interno dell'addEventListener quando clicco modifico (+1) l'activeClassIndex
     activeClassIndex++;
 
+    // ! BONUS 1: Aggiungere il ciclo infinito del carosello
+    if (activeClassIndex === images.length) activeClassIndex = 0;
+    
     // 6. All'interno dell'addEventListener quando clicco associo nuovamente la classe active secondo l'activeClassIndex
     galleryListImages[activeClassIndex].classList.add('active');
 });
@@ -64,5 +68,7 @@ nextArrow.addEventListener('click', function(){
 prevArrow.addEventListener('click', function(){
     galleryListImages[activeClassIndex].classList.remove('active');
     activeClassIndex--;
+    // ! BONUS 1: Aggiungere il ciclo infinito del carosello
+    if (activeClassIndex < 0) activeClassIndex = images.length - 1;
     galleryListImages[activeClassIndex].classList.add('active');
 });
